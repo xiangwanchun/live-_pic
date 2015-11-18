@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../jquery1.8.2.js" type="text/javascript"></script>
+    <script src="../../dialog.2.3.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../internal.js"></script>
+    <script type="text/javascript" src="../../tabs/jquery.tabso_yeso.js"></script>
+    <link href="../../../../css/calendar.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lhgcalendar.min.js"></script>
+    <link href="../../tabs/shou.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        .font{font:12px '微软雅黑'}
+        .clear{clear:both; float:none;}
+        .dis-none{display: none;}
+        .mp-0{margin:0px;padding:0px;}
+        .my-tab{position:relative;;width: 504px;}
+        .my-tab ul{background-color:#F0F0F0;width: 504px;height: 32px;}
+        .my-tab ul li{background:url('../../themes/default/images/b1_23.png') no-repeat; width:115px;height: 32px; float: left;line-height: 32px;text-align: center;cursor: pointer;}
+        .tab-con{height: auto;position: relative;}
+        .tab-con .tab-con-cil{height: auto;}
+
+        input{line-height: 25px;height:25px;}
+        .input_search{/*background: #333333;*/;width:auto;border:1px solid #B2B2B2;border-radius: 4px;height:auto;float:right;}
+        .keyword{background:url('/images/super_new/prize_search.png') no-repeat 0px 0;text-align:left;cursor:default;margin:0;padding:0 0 0 18px;border:none;border-radius: 0;border-right:1px solid #B2B2B2;}
+        .inputbut{text-align: center;color:#000000;padding-right: 10px;/*background:#333333;*/cursor: pointer;}
+        .searches{position: absolute;right: 0;top: -36px;z-index: 9999;}
+
+        .searchbox{width: 98%; height:30px; line-height:30px; margin-top: 5px; text-align: center;}
+        .searchbox .txt{width:220px; height:20px; line-height:20px; background: #FFF;border:1px solid #d7d7d7;}
+        .txt{width:220px; height:20px; line-height:20px; background: #FFF;border:1px solid #d7d7d7;}
+        .searchbox a{display:inline-block;}
+        #container{width: 98%; height: 310px;margin: 5px auto;}
+        .pages{margin-right:20px;margin-top:20px;float:right;}
+        .pages a{display:inline-block;}
+        .fl{float: left; padding-top: 3px;padding-right: 5px;}
+        .mt{margin-top: 5px; vertical-align:middle; }
+        .mt div{font-size: 20px;line-height: 30px; font-weight: bold; cursor: pointer;display: inline-block;height: 20px;width: 20px;}
+        .add_op{background-image: url('../../themes/default/images/l_add22.png'); background-repeat:no-repeat;}
+        .del_op{background-image: url('../../themes/default/images/l_del22.png')}
+
+        .text-bg{background-color: #B2B2B2;}
+    </style>
+</head>
+<body>
+
+<div class='my-tab mp-0' id="myTab">
+    <ul class='mp-0 font'>
+        <li>选择已有投票</li>
+        <li>投票设置</li>
+    </ul>
+    <div class="clear"></div>
+    <div class='tab-con font' style="width: 504">
+        <div class='tab-con-cil'>
+            <div class="searches">
+                <div class="input_search">
+                    <input type="text" id="title_search" name="title_search" value="请填写要搜索的标题" title="请填写要搜索的标题" class="inputbut keyword" style="background: url('../../themes/default/images/prize_search.png') no-repeat scroll 0px 0px transparent;">
+                    <input type="button" style="padding:0;margin:0;border:none;" value="搜索" id="doSearch" class="search inputbut">
+                </div>
+            </div>
+            <div id="container"></div>
+        </div>
+        <div class='tab-con-cil dis-none'>
+            <div style="margin: 20px 30px;">
+                <div style="margin-top: 12px;">
+                    投票标题：<input type="text" value="" style="margin-right: 10px;" class="txt text-bg" name="title" id="title"><!--<input type="checkbox" name="isSave" id="isSave" checked="checked">创建完成后保存到企划活动素材-->
+                </div>
+                <hr size="1" style="color: #cccccc; margin-top: 15px;">
+                <table>
+                  <tr>
+                    <td align="right" scope="col">有效期：</td>
+                    <td>
+                      <div class="selectbar">
+                        <div class="calendarbox"><input type="text" name="option[start_time]" class="runcode" id="gstart_time" value=""/></div>
+                      </div>
+                    </td>
+                    <td width="40" align="center">
+                      <div class="selectbar">
+                        <span class="lev1_title_nopic">至</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="selectbar">
+                        <div class="calendarbox"><input type="text" name="option[end_time]" class="runcode" id="gend_time" value=""/></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <div style="margin-top: 12px;">
+                    <input type="radio" name="isSelects" value="radio" checked="checked">单选
+                    <input type="radio" style="margin-left: 20px;" name="isSelects" value="checkbox">多选
+                </div>
+                <hr size="1" style="color: #cccccc; margin-top: 15px;">
+                <div style="margin-top: 12px;" id="all_opt">
+                    <div class="mt">
+                        <i>选项1：</i><input type="text" name="vote[]" class="txt text-bg"> <div title="增加选项" onclick="add_option(this)" class="add_op"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var g = $G;
+    $(document).ready(function(){
+
+        $('.my-tab').find('ul:first').find('li:first').css('background', 'url("../../themes/default/images/b2_22.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)');
+        $('.my-tab').find('ul:first').find('li').click(function(){
+            $(this).css('background', 'url("../../themes/default/images/b2_22.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)').siblings().removeAttr('style');
+            $('.my-tab').find('.tab-con-cil:eq('+$(this).index()+')').show().siblings().hide();
+        });
+        
+        $('#gstart_time').calendar({ format:'yyyy-MM-dd HH:mm:ss',maxDate:'#gend_time',targetFormat:'yyyy-MM-dd HH:mm:ss' });
+        $('#gend_time').calendar({ format:'yyyy-MM-dd HH:mm:ss',minDate:'#gstart_time',targetFormat:'yyyy-MM-dd HH:mm:ss' });
+
+        initSearchText($('#title_search'));
+        $('#title_search').keydown(function(event){
+            if(event.keyCode == 13){
+                doSearch();
+            }
+        });
+    });
+
+    var vote_html = '<div class="mt"><i>选项2：</i><input type="text" class="txt text-bg"> <div title="增加选项" onclick="add_option(this)" class="add_op"></div> <div title="删除选项" onclick="del_option(this)" class="del_op"></div></div>';
+    //投票JS
+    var add_option = function(obj){
+        $(obj).parent('div:first').after(vote_html);
+        change_tit_name();
+    };
+    var del_option = function(obj){
+        $(obj).parent('div:first').remove();
+        change_tit_name();
+    };
+    var change_tit_name = function(){
+        $('#all_opt').find('.mt').each(function(index, element){
+            $(this).find('i').html('选项'+(++index)+': ');
+        });
+    };
+
+
+
+
+    function initSearchText(obj){
+        var title = obj.attr('title') ? obj.attr('title') : "请填写要搜索的标题";
+        var value = $.trim(obj.val());
+        if(value == ''){
+            obj.val(title);
+        }
+
+        obj.blur(function(){
+            if ($.trim(obj.val())=="")
+                obj.val(title);
+        }).focus(function(){
+                    if ($.trim(obj.val())==title)
+                        obj.val("");
+                })
+    }
+
+    function ajaxGetContent(cntPage){
+        var requestUrl = editor.options.getHiCmsUrl+"?type=vote&status=6&cntPage="+cntPage;
+        if (arguments.length>1) {
+            requestUrl += "&name="+arguments[1];
+            if(arguments.length > 2)
+                requestUrl += "&catalog="+arguments[2];
+        }
+        ajax.request(requestUrl, {
+            timeout:100000,
+            action:"get",
+            onsuccess:function (xhr) {
+                //去除空格
+                var jsonData = xhr.responseText;
+                jsonData = eval('('+jsonData+')');
+                var prefixLink = jsonData.link;
+                var html = "";
+                for (var i=0; i< jsonData.list.length; i++) {
+                    html += '<div style="margin-left:10px;height:24px;line-height:24px;width:480px;white-space:nowrap;overflow:hidden; text-overflow:ellipsis;"><input type="radio" name="content[id]" value="' + jsonData.list[i].url+ '"  /><input type="hidden" id="content_image_' + jsonData.list[i].id + '" value="' + jsonData.list[i].image + '"/><span style="margin-left:10px;">' +jsonData.list[i].title + '</span></div>';
+                }
+                html += '<div class="pages" style="width: 485px;margin-top: 60px;margin-right: 0px;">';
+                html += '<span class="fl">（'+jsonData.pageInfo.cntPage+'/'+jsonData.pageInfo.totalPage+'）页</span>';
+                for (var i=jsonData.pages.length-1; i >= 0; i--) {
+                    html += '<a  style="float: right;" onclick="ajaxGetContent(\''+jsonData.pages[i].cntPage+'\', \''+jsonData.pages[i].searchName+'\')" href="javascript:void(0)" class="button">'+jsonData.pages[i].name+'</a>';
+                }
+                html += '</div>';
+                g("container").innerHTML = html;
+            },
+            onerror:function () {
+                g("container").innerHTML = lang.imageLoadError;
+            }
+        });
+    }
+
+
+    function doSearch(){
+        var title = $('#title_search').val();
+        if( title == $('#title_search').attr('title'))
+            title = '';
+        ajaxGetContent(1, title);
+    }
+    utils.domReady(function(){
+        ajaxGetContent(1);
+    });
+    var static_url = parent.top.$('#static_url').val();
+    g("doSearch").onclick = doSearch;
+    dialog.onok = function(){
+        //将选中的投票添加到编辑器中
+        var list=document.getElementsByName("content[id]");
+        var content = "";
+        var img_path = static_url + '/js/ueditor/themes/default/images/l_vote.png';
+        for(var i=0;i<list.length;i++) {
+            if(list.item(i).checked){
+                var radio = list.item(i);
+                var link = radio.getAttribute("value");
+             //   var arrLink = link.split(":");
+             //   var image = document.getElementById("content_image_"+arrLink[2]);
+              var title = radio.parentNode.lastChild.innerHTML;
+              //  if (image.getAttribute("value")!="" && image.getAttribute("value")!='null') {
+            //        content='<a style="background:url('+img_path+') no-repeat;padding-left:25px;" href="javascript:MYAPP.gopage('+type+','+link+'")" title="'+title+'"><img src="'+image.getAttribute("value")+'" alt="'+title+'"/></a>';
+             //   } else {
+                    content='<a style="background:url('+img_path+') no-repeat;padding-left:25px;" href="javascript:MYAPP.gopage(\'vote\',\''+link+'\')" title="'+title+'">'+title+'</a>';
+              //  }
+                break;
+            }
+        }
+        // 插入内容到编辑器
+        editor.execCommand('inserthtml', content);
+
+        //将自定义添加的投票添加到编辑器中（如果勾选保存，将投票数据保存到DB）
+        //if( $('#isSave').checked == 'checked'){
+        if( true){
+            var title = $('#title').val();
+            var multiple = $('input[name="isSelects"]').val();
+            var opts_val = null;
+            var is_input = false;
+            var is_save_status = false;
+            $('#all_opt').find('input[type=text]').each(function(index, ele){
+                var val = $(this).val();
+                if( index == 0 && val != '')
+                    opts_val = val;
+                else if(val != '')
+                    opts_val = opts_val + ',' + val;
+                else
+                    is_input = true;
+            });
+            var startTime = $("#gstart_time").val();
+            var endTime = $("#gend_time").val();
+            if(title != '' || opts_val != null){
+                if( (!is_input) && title == ''){
+                    alert('请填写要搜索的标题!');
+                    return false;
+                } else if(is_input && title != ''){
+                    alert('请输入全部选项!');
+                    return false;
+                } else if(startTime == "") {
+                    alert('请选择投票开始时间!');
+                    return false;
+                } else if(endTime == "") {
+                    alert('请选择投票结束时间!');
+                    return false;
+                }
+                var url = editor.options.saveVote;
+                $.post(url, {type_code:'vote', title:title, opts:opts_val, multiple:multiple,startTime:startTime, endTime:endTime}, function(data){
+                    if( data.code <= 0){
+                        alert(data.message);
+                    }else{
+                        var vhtml = '<a style="background:url('+img_path+') no-repeat;padding-left:25px;" class="vote_bg" href="app://vote:'+data.data+'" title="'+title+'">投票：'+title+'</a>';
+                        editor.execCommand('inserthtml', vhtml);
+                    }
+                }, 'json');
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

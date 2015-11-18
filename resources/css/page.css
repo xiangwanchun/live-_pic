@@ -1,0 +1,12 @@
+/*pagerwidget*/
+#pagination>span>input{
+
+	color:black;
+}
+#but_redirect{
+	color:black;
+}
+.current{
+	color:red;
+}
+/*gq*/

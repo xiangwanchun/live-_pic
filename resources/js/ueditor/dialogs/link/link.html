@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="../internal.js"></script>
+    <script src="../../jquery1.8.2.js" type="text/javascript"></script>
+    <script src="../../dialog.2.3.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/core.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css">
+    <script type="text/javascript" src="../../../jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../easyui-lang-zh_CN.js"></script>
+    <!--配置组件-->
+    <script type="text/javascript" src="../../../moyuntv.config.js"></script>
+    <script type="text/javascript" src="../../../component.js"></script>
+    <style type="text/css">
+        *{margin:0;padding:0;color: #838383;}
+        table{font-size: 12px;margin: 10px;line-height: 30px}
+        .txt{width:240px;height:21px;line-height:21px;border:1px solid #d7d7d7;}
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td colspan="2" id="link_description"></td>
+        </tr>
+        <tr>
+            <td><label for="text"> <var id="lang_input_text"></var></label></td>
+            <td><input class="txt" id="text" type="text" disabled="true"/></td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;"><label for="href"> <var id="lang_input_url"></var></label></td>
+            <td><input class="txt" id="href" type="text" /> <br />
+                <a style="border:1px solid #999; width:60px;height:22px;line-height: 22px; display: inline-block; border-radius: 5px; text-align: center;  margin-top: 3px;" class="cur-pointer" id="selectContent">选择活动</a></td>
+        </tr>
+        <tr>
+            <td><label for="title"> <var id="lang_input_title"></var></label></td>
+            <td><input class="txt" id="title" type="text"/></td>
+        </tr>
+        <tr>
+            <td><label for="title"> <var id="lang_input_title"></var></label></td>
+            <td><input class="txt" id="title" type="text"/></td>
+        </tr>
+        <!--<tr>
+             <td colspan="2">
+                 <label for="target"><var id="lang_input_target"></var></label>
+                 <input id="target" type="checkbox"/>
+             </td>
+        </tr>-->
+        <tr>
+            <td colspan="2" id="msg">  <input id="type" type="hidden"/></td>
+
+        </tr>
+    </table>
+<script type="text/javascript">
+
+    var range = editor.selection.getRange(),
+        link = range.collapsed ? editor.queryCommandValue( "link" ) : editor.selection.getStart(),
+        url,
+        text = $G('text'),
+        rangeLink = domUtils.findParentByTagName(range.getCommonAncestor(),'a',true),
+        orgText;
+    link = domUtils.findParentByTagName( link, "a", true );
+    if(link){
+        url = utils.html(link.getAttribute( 'data_ue_src' ) || link.getAttribute( 'href', 2 ));
+
+        if(rangeLink === link && !link.getElementsByTagName('img').length){
+            text.removeAttribute('disabled');
+            orgText = text.value = link[browser.ie ? 'innerText':'textContent'];
+        }else{
+            text.setAttribute('disabled','true');
+            text.value = lang.validLink;
+        }
+
+    }else{
+        if(range.collapsed){
+            text.removeAttribute('disabled');
+            text.value = '';
+        }else{
+            text.setAttribute('disabled','true');
+            text.value = lang.validLink;
+        }
+
+    }
+    $G("title").value = url ? link.title : "";
+    $G("href").value = url ? url: '';
+    //$G("target").checked = url && link.target == "_blank" ? true :  false;
+    var linkDescription = "普通链接",
+        arrUrl = url ? url.split("://") : new Array();
+    if (arrUrl.length > 0) {
+        if (arrUrl[0] == "tel") {
+            linkDescription = "电话链接";
+        } else if (arrUrl[0] == "app") {
+            if (arrUrl.length > 1) {
+                var arrParam = arrUrl[1].split(":");
+                if (arrParam.length > 0) {
+                    if (arrParam[0] == 'article') {
+                        linkDescription = "文章链接";
+                    } else if (arrParam[0] == 'pic') {
+                        linkDescription = "图集链接";
+                    } else if (arrParam[0] == 'video') {
+                        linkDescription = "视频链接";
+                    } else if (arrParam[0] == 'link') {
+                        linkDescription = "外链接";
+                    } else if (arrParam[0] == 'vote') {
+                        linkDescription = "投票链接";
+                    } else if (arrParam[0] == 'activity') {
+                        linkDescription = "活动链接";
+                    } else if (arrParam[0] == 'special') {
+                        linkDescription = "专题链接";
+                    } else if (arrParam[0] == 'shopguide') {
+                        linkDescription = "导购链接";
+                    } else if (arrParam[0] == 'survey') {
+                        linkDescription = "调查链接";
+                    }
+                    $G("href").disabled = true;
+                }
+            }
+        }
+    }
+    $G("link_description").innerHTML = linkDescription;
+    $focus($G("title"));
+
+    function handleDialogOk(){
+        var href =$G('href').value.replace(/^\s+|\s+$/g, '');
+        if(href){
+            /*if(!
+            (href,["http","/","ftp://"])) {
+                href  = "http://" + href;
+            }*/
+            var obj = {
+                'href' : href,
+                'target' : "",//$G("target").checked ? "_blank" : '_self',
+                'title' : $G("title").value.replace(/^\s+|\s+$/g, ''),
+                'data_ue_src':href
+            };
+
+            if (/^(http:\/\/|https:\/\/).*/.test(href)){
+                obj.href = 'javascript:;';
+                obj.onclick = "redirectToShopDetail(\'"+href+"\')";
+            }
+
+            if (/^(myapp):\/\/(.*)+/i.test(href)) {
+                obj.href = 'javascript:;';
+                obj.onclick = href;
+            }
+
+            //修改链接内容的情况太特殊了，所以先做到这里了
+            //todo:情况多的时候，做到command里
+            if(orgText && text.value != orgText){
+                link[browser.ie ? 'innerText' : 'textContent'] =  obj.textValue = text.value;
+                range.selectNode(link).select()
+            }
+            if(range.collapsed){
+                obj.textValue = text.value;
+            }
+            editor.execCommand('link',obj );
+            dialog.close();
+        }
+    }
+    dialog.onok = handleDialogOk;
+    $G('href').onkeydown = $G('title').onkeydown = function(evt){
+        evt = evt || window.event;
+        if (evt.keyCode == 13) {
+            handleDialogOk();
+            return false;
+        }
+    };
+    $G('href').onblur = function(){
+        if(!hrefStartWith(this.value,["http","/","ftp://"])){
+            //$G("msg").innerHTML = "<span style='color: red'>"+lang.httpPrompt+"</span>";
+        }else{
+            $G("msg").innerHTML = "";
+        }
+    };
+
+    function hrefStartWith(href,arr){
+        href = href.replace(/^\s+|\s+$/g, '');
+        for(var i=0,ai;ai=arr[i++];){
+            if(href.indexOf(ai)==0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    $(document).ready(function() {
+        $("#selectContent").click(function() {
+            var url = editor.options.UEDITOR_HOME_URL + "../../../content/loadConAndGoodsList?selectMode=radio";
+            openDialogComponent('添加内容', url, function() {
+                callbackDialogComponent('setConOrGoods', $("#link"));
+            }, 600, 450, 'top0');
+        });
+    });
+
+
+</script>
+</body>
+</html>

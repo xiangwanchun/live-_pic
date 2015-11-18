@@ -1,0 +1,131 @@
+
+
+ul li{
+    list-style-type:none;
+     margin: 0;
+    padding: 0;
+}
+/*select*/
+div.selectbar{float:left;width:115px;margin: 7px 5px 0 0;}
+.select_box {width:155px; background:url(../images/super_new/select_box1.png) no-repeat; position:relative;z-index:1000;}
+.select_box span {cursor:pointer; display:block; line-height:25px; width:155px; height:18px; overflow:hidden;font: 12px "Î¢ÈíÑÅºÚ";color:black;padding:5px 5px;color:#ffffff}
+.select_box ul li {cursor:pointer;}
+.son_ul {width:115px; position:absolute; left:0; top:25px;background:url(../images/super_new/50bgblack.png);z-index:2000;}
+.son_ul li {display:block;padding:5px 5px; width:145px;font: 12px "Î¢ÈíÑÅºÚ";color:black;margin-left: -40px;color:#ffffff}
+.son_ul li.hoverselect{background-color:#ff9600;}
+
+
+/*时间选择框背景图片*/
+.calendarbox{width:173px;height:28px;background:url(../images/super_new/datatime.png) no-repeat;display:block;color:#fff;}
+.calendarbox input.runcode{width:136px;background:none;border:none;outline:none;color: #fff;padding:0px 31px 0 5px;line-height:28px;}
+
+.site>.live,.hicms{
+	border:1px solid #1C94C4;
+	border-radius: 3px;
+	cursor: pointer;
+	display: inline-block;
+	height:20px;
+	line-height: 20px;
+	padding:0 5px;
+}
+.border_tr>td{
+	border:1px solid #B9B9B9;
+	text-align: center;
+}
+
+.d_year>span,.d_month>span{
+	display: inline-block;
+	width:50px;
+	text-align: center;
+	height:20px;
+	line-height: 20px;
+	cursor: pointer;
+}
+.chk_year{
+	background: #1C94C4;
+	border-radius: 4px;
+
+}
+.chk_month{
+	background: #1C94C4;
+	border-radius: 4px;
+}
+.tags>li{
+	padding-bottom: 10px;
+}
+
+.chk_date li{
+	text-align: right;
+	height:30px;
+	/*border-bottom: 1px solid green;*/
+	line-height: 30px;
+	padding-bottom:6px;
+
+}
+.chk_date li span{
+	cursor:pointer;
+	display: inline-block;
+	width:50px;
+	height:30px;
+	border:1px solid #1C94C4;
+	text-align: center;
+
+
+}
+
+.sort_data li{
+	/*border-bottom: 1px solid #1C94C4;*/
+	padding-bottom: 2px;
+	height:20px;
+	line-height: 20px;
+}
+.test{
+	height:200px;
+}
+.sort_div_pos{
+	position: relative;
+}
+.sort_div{
+	display:none;
+	position: absolute;
+	left:0;
+	top:0;
+}
+.line_w{
+	background:orange;
+	display:inline-block;
+	width:85%;
+	height:2px;
+}
+.chk_span{
+	background: #1C94C4;
+	border-radius: 4px;
+}
+a{
+	text-decoration:none;
+}
+
+
+/*快速时间选择css  start*/
+select.h25 {
+    height: 27px;
+    line-height: 27px;
+}
+.h25 {
+    height: 25px;
+    line-height: 25px;
+}
+.w100px {
+    width: 100px;
+}
+.input {
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    box-shadow: 0 0 5px #ccc inset;
+    padding-left: 4px;
+}
+input, button, select, textarea {
+    outline: medium none;
+}
+
+/*时间选择css  end*/

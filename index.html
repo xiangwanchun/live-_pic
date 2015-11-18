@@ -1,0 +1,691 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>互动广告列表</title> 
+  <link rel="stylesheet" type="text/css" href="resources/css/core.css" /> 
+  <link rel="stylesheet" type="text/css" href="resources/css/themes/icon.css" /> 
+  <link rel="stylesheet" type="text/css" href="resources/css/themes/default/easyui.css" /> 
+  <link rel="stylesheet" type="text/css" href="resources/js/dialog/ui-dialog.css" /> 
+  <link rel="stylesheet" type="text/css" href="resources/css/index_dianshangqianggou.css" /> 
+  <script type="text/javascript" src="resources/js/jquery-1.8.0.min.js"></script> 
+  <script type="text/javascript" src="resources/js/page.js"></script> 
+  <script type="text/javascript" src="resources/js/jquery.moyuntv.js"></script> 
+  <script type="text/javascript" src="resources/js/jquery.checkbox.js"></script> 
+  <script type="text/javascript" src="resources/js/jquery.easyui.min.js"></script> 
+  <script type="text/javascript" src="resources/js/easyui-lang-zh_CN.js"></script> 
+  <script type="text/javascript" src="resources/js/common.js"></script> 
+  <script type="text/javascript" src="resources/js/dialog/dialog-min.js"></script> 
+  <link rel="stylesheet" type="text/css" href="resources/js/uploadify/uploadify.css" /> 
+  <script type="text/javascript" src="resources/js/uploadify/jquery.uploadify.js"></script> 
+  <script type="text/javascript">
+        $(document).ready(function(){
+            $(".btn-control.delete").click(function(){
+                /*
+                new top.layer({ title: "提示" }).alert("是否确定删除？", 6, function (data) {
+                                   alert("你点击了确定哈，返回值：" + data);
+                                });*/
+                new top.layer().page({ title: "这是一个页面层", page: { html: "<h1 class='xx'>传入了html代码</h1><a class='ww'>传入了html代码</a><br>" +
+                        "<input type='button' id='click1' value='click1'><input type='button' value='click1' id='click2'>"},
+                    custom:{btns:[["click1","click",function(data){console.log(data)}]]}
+                });
+            });
+        })
+    </script> 
+  <style>
+            #daohang_lan li a{color:#FFF;font-size:16px;height: 24px;}
+            .but_fanhui {
+                background: url("../images/btn_return.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+                border: medium none;
+                color: #0065A9;
+                cursor: pointer;
+                font-size: 0;
+                height: 30px;
+                line-height: 0;
+                padding-left: 13px;
+                text-align: center;
+                width: 62px;
+            }
+            .upload_wrapper {
+                padding-left: 20px;
+            }
+            .upload_btn_wrapper {
+                height: 40px;
+                line-height: 40px;
+            }
+            .but_w {
+                background: url("../images/but_w_bg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+                border: 1px solid #DBDADB;
+                border-radius: 4px;
+                height: 30px;
+                padding: 0 15px;
+            }
+            .f_r {
+                float: right;
+            }
+            /**********/
+            .upload_list {
+                border: 1px solid #CCCCCC;
+                height: 350px;
+                margin-bottom: 10px;
+                overflow-y: scroll;
+                width: 460px;
+            }
+            .btns {
+                height: 37px;
+                position: absolute;
+                width: 107px;
+            }
+            .upload_wrapper input {
+                background: url("../images/but_w_bg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+                border: 1px solid #DBDADB;
+                border-radius: 4px;
+                line-height: 28px;
+                /*margin-right: 20px;*/
+                padding: 0 5px;
+                text-align: center;
+            }
+            /**************/
+            .but_b {
+                background: url("../images/btn_create.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+                border: medium none;
+                color: #0065A9;
+                cursor: pointer;
+                font-size: 0;
+                height: 30px;
+                line-height: 0;
+                padding: 5px 15px;
+                width: 61px;
+            }
+            .upload_wrapper .upload_list .sp_img_ico {
+                float: left;
+                margin: 6px 6px 0 0;
+            }
+            .f_l{
+                float:left;
+            }
+            /****/
+            .dis {display: none;}
+            .upload_wrapper .upload_list .upload_progressbar {
+                background: url("../images/up_bg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+                float: left;
+                height: 11px;
+                margin-right: 5px;
+                margin-top: 4px;
+                width: 144px;
+            }
+            .upload_wrapper .upload_list .head_td{padding:10px 5px; color:#666;}
+            .upload_wrapper .upload_list .btn_removeUpload {
+                color: #009999;
+            }
+            .pointer {
+                cursor: pointer;
+            }
+            table {
+                font-size: 12px;
+                width: 100%;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            .but_w:hover{background:url(../images/but_w_bg_f.png) repeat-x; cursor:pointer;}
+
+            /*分页*/
+            .box1 .nav {
+                background: url("../images/super_new/nav_bg.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+            }
+            span a {
+                color: #0065A9;
+            }
+            .container {width: 430px;margin: 0 auto;padding:0 5px;border: 0px solid red;height:100%;}
+            .cont-item{position:relative;z-index:1;float:left;margin:5px;width:132px;}
+            .cont-item dd{width:130px;height:160px;border: 1px solid #cccccc;margin-left:0;}
+            .cont-item dd img{width: 100%;height: 160px;}
+            .cont-item dt{margin-top:10px;width: 130px;height: 30px;border: 1px solid #cccccc;overflow: hidden; }
+            .cont-item dt span{padding: 0 5px;line-height: 30px;font-size: 14px;text-align: center;color: #333333;}
+            .cont-item .close{position: absolute;top:0px;right:0;z-index:99;display: block;width: 24px;height: 24px;background-color: #ffffff;cursor: pointer;}
+            /* 新增加 */
+            #upload_wrap a.describe{line-height:30px;vertical-align:middle;display:inline-block;margin:0 5px 12px 0;}
+            .imgCon li{padding:10px;border:1px solid #099acf;border-radius:5px;width:195px;margin:0 0 10px 10px ;overflow:hidden;float:left;}
+            .imgCon li img{width:195px;height:195px;display:inline-block;}
+            .imgCon li .imgTitileWrap{height:36px;line-height:36px;}
+             .imgCon li .imgTitileWrap .imgTitile{height:36px;line-height:36px;width:170px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:5px;}
+             .imgCon li .imgTitileWrap input{float:left;height:36px;line-height:36px;}
+            .pd0-8{padding:0 8px;}
+            .leftCon{margin-right:180px;}
+            .rightCon{position:absolute;top:28px;right:0;border:1px solid #099acf;width:200px;height:100%;min-height:800px;overflow-y:auto;overflow-x:hidden;}
+            #main{position:relative;}
+            .addGround{width:180px;height:30px;line-height:30px;display:inline-block;margin:10px auto 0 10px;border-radius:4px;border:1px solid #099acf;text-align:center;color:#099acf;}
+    </style> 
+ </head> 
+ <body> 
+  <div id="main" class="ad"> 
+        <div class="leftCon">
+          <!-- 顶部批量操作区 -->
+           <div class="wr100 relative h40 bdb2px"> 
+            <h4 class="h4 h40 ad-title">图片管理</h4> 
+            <div class="btn  h30  buf2 " id="upload_wrap"> 
+             <!-- 上传节目 --> 
+                 <a class="describe">大小不超过5M</a>
+                 <a href="javascript:void(0);" onclick="showUpload()"> <img src="resources/images/btn_upload_video.png" style="border:none;" /> </a>  
+            </div> 
+           </div> 
+           <div class="wr100 h30 pd10-0 bt1 relative">
+            <div class="h30  fl mgr10">
+                <input type="checkbox" class="checkbox-all mg0-5" /><label for="">全选</label>
+            </div>
+            <a class="btn w100px h30 btn-style fl mgr10" onclick="bindAct();">移动删除</a> 
+            <a class="btn w100px h30 btn-style fl" onclick="delet_vedio();">批量删除</a> 
+            
+            <div class="relative buf2" style="display:inline">
+            <span class="mgl20">搜索</span> 
+             <input type="text" name="search" id="search" value="" class="input-search input h25 w210px" style="text-align:left;" /> 
+             <label class="submit-search"></label> 
+            </div> 
+           </div> 
+           <!-- 图片内容展示区 -->
+           <div class="wr100 pd10-0"> 
+         
+            <ul class="imgCon clearfixrow" id="imgCon">
+                <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+                 <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+                 <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+                 <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+                 <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+                 <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+                 <li>
+                    <img src="resources/images/default.png" alt="" />
+                    <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
+                    <div class="clearfixrow">
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                    </div>
+                </li>
+            </ul>
+
+
+          <!--  <table class="tc ad-table-1" width="100%" cellpadding="0" cellspacing="0" height="100%"> 
+        <thead> 
+         <tr> 
+          <td width="5%"></td> 
+          <td width="10%">缩略图</td> 
+          <td width="10%">素材名称</td> 
+          <td width="10%">状态</td> 
+          <td width="10%">互动活动</td> 
+          <td width="10%">上传日期</td> 
+          <td width="15%">操作</td> 
+         </tr> 
+        </thead> 
+        <tbody> 
+         <tr class="tr-each"> 
+          <td><input type="checkbox" class="checkbox-one" value="8" /></td> 
+          <td> <img src="/static/images/com_1/img2015/10/23/5629e346a71b1.jpg" onerror1="javascript:this.src='/images/vmsdefault1.jpg';" width="64px" height="45px" title="测试1" /> </td> 
+          <td> 测试1 </td> 
+          <td> <span class="mark3 mark3_8" title="未绑定">未绑定</span> <span class="mark2 mark2_8" title="已绑定" style="display:none">已绑定</span> </td> 
+          <td class="bindActTiele_8"> 未绑定活动 </td> 
+          <td> 2015-10-23 15:36:01 </td> 
+          <td> <a javascript="void(0)" class="btn-control bind_tmp bind_tmp_8" id="8">绑定</a> <a javascript="void(0)" class="btn-control bind_tmp_remove bind_tmp_remove_8" style="display:none" id="8">解绑</a> <a javascript="void(0)" class="btn-control delete_tmp" id="8">删除</a> </td> 
+         </tr> 
+         <tr class="tr-each"> 
+          <td><input type="checkbox" class="checkbox-one" value="9" /></td> 
+          <td> <img src="/static/images/com_1/img2015/10/23/5629e3471c685.jpg" onerror1="javascript:this.src='/images/vmsdefault1.jpg';" width="64px" height="45px" title="测试2" /> </td> 
+          <td> 测试2 </td> 
+          <td> <span class="mark3 mark3_9" title="未绑定">未绑定</span> <span class="mark2 mark2_9" title="已绑定" style="display:none">已绑定</span> </td> 
+          <td class="bindActTiele_9"> 未绑定活动 </td> 
+          <td> 2015-10-23 15:36:01 </td> 
+          <td> <a javascript="void(0)" class="btn-control bind_tmp bind_tmp_9" id="9">绑定</a> <a javascript="void(0)" class="btn-control bind_tmp_remove bind_tmp_remove_9" style="display:none" id="9">解绑</a> <a javascript="void(0)" class="btn-control delete_tmp" id="9">删除</a> </td> 
+         </tr> 
+        </tbody> 
+       </table>  -->
+            <div class="wr100 h40 pdt20"> 
+             
+             <div class="page pr50 h40 tr"> 
+              <span id="page_number" style="color:#999">共 12 条记录，每页 10 条，当前第 1/2 页</span> 
+              <div class="fl pagination" id="pagination">
+               <span class="first hidden"><a href="/photo/list">第一页</a></span>
+               <span class="previous hidden"><a href="/photo/list">上一页</a></span>
+               <span class="next"><a href="/photo/list?page=2">下一页</a></span>
+               <span class="last"><a href="/photo/list?page=2">最末页</a></span> 
+               <span id="jump_page">跳转到第 <input type="text" class="input_s" style="width:30px; height:20px; line-height:20px;text-align:center;" id="input_page_redirect-photo-list" value="1" /> 页 <input type="button" id="but_redirect" class="but_page" value="go" style="width:40px;" /></span> 
+               <script type="text/javascript">
+                        //正整数
+                        function isPInt(str) {
+                            var g = /^[1-9]*[1-9][0-9]*$/;
+                            return g.test(str);
+                        }
+                        $(".but_page").click(function(){
+                            var page = $("#input_page_redirect-photo-list").val();
+                            if(!isPInt(page)){
+                                alert("只能输入正整数");  return ;
+                            }
+                            var link = "/photo/list";//window.location.href;
+                            var url = "";
+                            if (link.indexOf("page=")>0) {
+                                url = link.replace(/page=\d+/, "page="+page);
+                            } else {
+                                url = link+(link.indexOf("?")>0? "&page="+page : "?page="+page);
+                            }
+                            /*window.location = (url);*/
+                            window.location = (url);
+                        });
+                    </script> 
+              </div> 
+             </div> 
+            </div> 
+        </div><!-- 左边部分 -->
+        <div class="rightCon">
+            <a class="h30 btn-style  wr100" style="display:block">未分组</a>
+            <a href="javascript:void(0);" class="addGround">+新建分组</a>
+        </div><!-- 右边添加分组 -->
+   </div> 
+  <!-- 加载中 --> 
+  <div id="win" class="easyui-window" title="加载中..." data-options="modal:true,closed:true,closable:true,collapsible:false,maximizable:false,resizable:false,minimizable:false,shadow:false" style="width:300px;height:150px;padding:10px;"> 
+   <table width="100%" height="100%"> 
+    <tbody>
+     <tr>
+      <td valign="middle"> <img src="/images/loading.gif" /></td>
+      <td id="loading_description" valign="middle">加载中，请稍后</td> 
+     </tr> 
+    </tbody>
+   </table> 
+  </div> 
+  <!-- 加载中end --> 
+  <!-- 视频预览窗口 --> 
+  <div id="play-window" title="视频预览" class="easyui-window" data-options="closed:true,tools:'#play-window-bt'"></div> 
+  <div id="video-upload-window" data-options="closed:true,tools:'#btn-video-upload-window',width:500,height:450" class="easyui-window" style="display:none"> 
+   <form id="savePhoto" action="javascript:void(0)" method="post"> 
+    <div class="upload_wrapper"> 
+     <div class="upload_btn_wrapper"> 
+      <div class="btns"> 
+       <div id="flashContent"></div> 
+      </div> 
+      <input type="button" value="选择上传素材" id="uploadFile" /> 上传期间不要关闭本页面 
+      <div id="some_file_queue" style="display:none"></div> 
+     </div> 
+     <div class="upload_list"> 
+      <div id="tb_upload_list" style="table-layout: fixed;" class="container"> 
+      </div> 
+     </div> 
+    </div> 
+    <div style="border-bottom:solid 1px #ccc; width:100%; height:1px; line-height:1px"></div> 
+   </form> 
+  </div> 
+  <script>
+        var showUpload = function(){
+            var d = dialog({
+                title: '上传图片',
+                content: $('#video-upload-window'),
+                okValue:'上传',
+                ok:function(){
+                    var subData = $("#savePhoto").serializeArray();
+                    var saveUrl = '/photo/save';
+                    $.post(saveUrl,subData,function(data){
+                        if(data.code == 1){
+                            window.location.href = data.url;
+                        }
+                    },'json');
+                },
+                cancelValue:'取消',
+                cancel:function(){
+                    if($('#tb_upload_list').find('dl').length > 0){
+                        $.messager.confirm('提示', '确认要取消正在上传的素材吗？', function(r) {
+                            if (r) {
+                                $('#tb_upload_list').empty();
+                            }else{
+                                return false;
+                            }
+                        });
+                    }
+                },
+                height: 400
+            });
+            d.showModal();
+        }
+        var removeImage = function(obj){
+            var dl = $(obj).closest('dl');
+            dl.remove();
+        }
+        $(function(){
+            $('#uploadFile').uploadify({
+                'auto':true,
+                'buttonText': '上传图片',
+                'queueID'  : 'some_file_queue',
+                'swf':'/resources/js/uploadify/uploadify.swf',
+                'uploader':'/photo/upload',
+                'formData':{com_id:1, ajax: 1},
+                'fileTypeDesc': '*.jpg;*.jpeg;*.gif;*.png;',
+                'fileTypeExts': '*.jpg;*.jpeg;*.gif;*.png;',
+                'onSelect': function(e, queueId, fileObj) {
+                },
+                onUploadSuccess: function(file, data, response) {
+                    var data = $.parseJSON(data);
+                    if (data.code == 1) {
+                        var photo = data.value;
+                        var html = '<dl class="cont-item">\
+                                        <i class="close" onclick="removeImage(this)"><img src="/resources/images/close_24px_1181428_easyicon.net.png"> </i>\
+                                        <dd><img src="'+photo.name+'"><input type="hidden" name="photo['+photo.pic_id+'][imgurl]" value="'+photo.name+'"/></dd>\
+                                        <dt><input name="photo['+photo.pic_id+'][name]" value="'+photo.title+'" style="text-align:left;"/></dt>\
+                                    </dl>';
+                        $('#tb_upload_list').append(html);
+                    } else {
+                        $.messager.alert("提示", "上传失败，请重新上传");
+                    }
+                }
+            });
+        });
+    </script>   
+  <script type="text/javascript">
+
+    $('#startTime,#endTime').datebox({
+        showSeconds: false,
+        width:'125',
+        // editable:false,  //设置时间框不能手动输入
+    });
+    $('.datebox').css({'height':'25px','border-radius':'7px','border':'solid 1px #ccc'});
+    $('.combo-arrow').parent().css('margin-left','-4px');
+
+/*    //清空date值
+    $(".clean").click(function(){
+        $('#startTime').datebox('setValue', '');   // 设置datebox 值
+        $('#endTime').datebox('setValue', ''); // 设置datebox 值
+    });
+*/
+    var $player_win;
+    $player_win = $('#play-window').window({
+        //modal:true,
+        // inline:true,
+        width:450,
+        height:380,
+        closed:true,
+        closable:true, //是否显示关闭按钮
+        collapsible:false,
+        maximizable:false,
+        minimizable:false,
+        modal: true, //显示遮罩
+        shadow:false,
+        resizable:false,
+        // tools:'#play-window-bt'
+    });
+
+    function close_player(){
+        $('#play-window').html("");
+        $player_win.window('close');
+    }
+
+    $(".bind_tmp").click(function(){
+        var photoId = $(this).attr('id');
+        bindAct(photoId);
+    });
+    var bindAct = function(photoId){
+        var id = new Array();
+        if(photoId){
+            id.push(photoId);
+        }else{
+            $('.checkbox-one:checked').each(function(){
+                id.push($(this).val());
+            });
+        }
+        if(id.length < 1){
+            $.messager.alert('提示','请选择要操作的对象!');
+            return false;
+        }
+        var height =470 ;
+        var top = ($(window).height() - height) * 0.5; //居中值
+        if(top <=5 ) {
+            var top = 5;
+        }
+        top += $(document).scrollTop();//$(window).height()只会拿到当前的可视宽度，而Dialog是绝对定位的，所以只会在最上面。当再加上滚动条所滚动的高度就OK。
+        $("body").append('<div class="kaitongfuwu fuwushow dis" style="width:500px; height:395px;z-index: 2001;top:5px;"></div>');
+        $('.fuwushow').dialog({
+            title:'添加内容',
+            width: 900,   
+            height: 490,   
+            closed: false,  
+            closable:true, 
+            top:top,
+            border:false,
+            modal: true, //显示遮罩
+            onClose:function(){  //当关闭的时候，清空搜索框内容，下次搜索时，那么每次都是搜索出全部内容
+                $("#name_search_1").val('');
+                a_search();
+            },
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',   
+                handler:function(){
+                    var cat = $(".cat_list:checked");
+                    if(cat.length>0){
+                        var actid = cat.eq(0).val();
+                        var name = $("#content_title_"+id).text(); //被选中的活动名字
+                        //开始绑定活动
+                        var data = {};
+                        data['act_id'] = actid;
+                        data['photo_id'] = id;
+                        var bindUrl = '/photo/bindAct';
+                        $.post(bindUrl,data,function(data){
+                            if(data.code == 1){
+                                setTimeout(window.location.reload(),2000) //解绑成功后刷新当前页
+                            }else{
+                                $.messager.alert('提示',data.message);
+                            }
+                        },'json')
+                    }else{
+                         $.messager.alert('提示','请选择活动！');
+                    }
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-no',
+                handler:function(){
+                    $('.fuwushow').window('close');
+                    $('.fuwushow').window('destroy');    //消毁
+                }
+            }],
+            cache: false,   
+            href:"/content/asyncGetList?selectMode=radio&q=1",
+            onOpen:function(){
+                $(".fuwushow").show();
+                // a_search();
+            },
+            onClose:function(){
+                $('.fuwushow').window('destroy');    //消毁
+            }
+
+        });
+    }
+    // 解绑
+    $(".bind_tmp_remove").click(function(){
+
+        var photoId = $(this).attr('id');
+       // var id = $(this).attr('act_id');
+        removeBindAct(photoId);
+    });
+
+
+    var removeBindAct = function(pid){
+        var id = new Array();
+        if(pid){
+            id.push(pid);
+        }else{
+            $('.checkbox-one:checked').each(function(){
+                id.push($(this).val());
+            });
+        }
+        if(id.length < 1){
+            $.messager.alert('提示','请选择要操作的对象!');
+            return false;
+        }
+        $.messager.confirm('提示', '您确认要解除服务绑定吗？', function(result){
+            if(result){
+                $('#win').window('open');
+                if(id){
+                    $.ajax({url: "/photo/removeActBind",type:'POST' ,data:{photo_id:id},dataType:'json', success: function(data){
+                        console.log(data);
+                        if(data.code==1){
+                            $.messager.alert('提示',data.message);
+                            setTimeout(window.location.reload(),2000) //解绑成功后刷新当前页
+                        }
+                    }});
+                }else{
+                    $('#win').window('close');
+                }
+            }
+        });
+    }
+
+    /*
+     **删除视频
+     */
+    $(".delete_tmp").click(function(){
+        var id = $(this).attr('id');
+        delet_vedio(id);
+    });
+
+    function delet_vedio(aid){
+
+        var id = new Array();
+        if(aid){
+            id.push(aid);
+        }else{
+            $('.checkbox-one:checked').each(function(){
+                id.push($(this).val());
+            });
+        }
+        if(id.length < 1){
+            $.messager.alert('提示','请选择要操作的对象!');
+            return false;
+        }
+        var vmsResType = $('#vms_type :selected').attr("status");
+
+        $.messager.confirm('提示', '确认要删除此素材吗？', function(r){
+            if (r){
+                $('#win').window('open');
+                $.post(
+                '/photo/del',
+                {'id':id},
+                function(date){
+                    $('#win').window('close');
+                    if(date.status <= 0){
+                        $.messager.alert('提示',date.delMessage);
+                    } else {
+                        $.messager.alert('提示',date.delMessage);
+                        setTimeout(location.reload(), 1000);
+                    }
+
+                },
+                'json'
+            );
+            }
+        });
+    }
+
+
+    $(".submit-search").click(function(){
+        video_search_index();
+    });
+
+    //搜索
+    function video_search_index() {
+        // var num = $(".select option:selected").val();//每页显示数目
+        var start_time = $('#startTime').datebox('getValue');
+        var end_time = $('#endTime').datebox('getValue');
+        var status = $('#chooseStatus').val();
+        var name = $('#search').val();  //搜索关键词
+        if (name == "请输入标题") {
+            name = '';
+        }
+
+        // console.info(vmsResType);
+        // console.info(status);
+        // console.info(catalogPath);
+        // console.info(catalogName);
+        // console.info(start_time);
+        // console.info(end_time);
+        // console.info(name);
+        // return false;
+
+        var date = $(".chk_date").html(); //月份
+
+        if(start_time > end_time){
+            $.messager.alert('消息','开始时间不能大于结束时间！');
+            return false;
+        }
+
+        if(start_time){
+            if(!end_time){
+                $.messager.alert('消息','请选择结束时间！');
+                return false;
+            }
+        }
+        if(end_time){
+            if(!start_time){
+                $.messager.alert('消息','请选择开始时间！');
+                return false;
+            }
+        }
+        if(!date){
+            var url = "/photo/list?name="+name+"&start_time="+start_time+"&end_time="+end_time+"&status="+status;
+        }else{
+            var url = "/photo/list?name="+name+"&date="+date;
+        }
+        $("#win").window("open");
+        window.location.href = url;
+
+        // $("#win").window("close");  载入后就刷新了，所以不需要关闭
+        return false;
+    }
+
+</script>   
+ </body>
+</html>

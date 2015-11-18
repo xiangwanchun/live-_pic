@@ -1,0 +1,229 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "microsoft yahei";
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+.main{
+    width: 100%;
+    height: 100%;
+    background-image:url("../images/bg.jpg") ;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    background-attachment: fixed;
+}
+.comment-new{
+    width: 100%;
+    height: 100%;
+    /*background-image:url("../images/comment.jpg") ;*/
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    overflow: hidden;
+}
+.index{
+    overflow: hidden;
+}
+.content{
+    width: 833px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.title{
+    padding-top: 54px;
+    padding-left: 34px;
+}
+.view{
+    position: absolute;
+    top: 150px;
+    width: 833px;
+    height: 629px;
+    background: url("../images/main-bg.png");
+}
+.hint{
+    position: absolute;
+    top: 210px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+.user-view{
+    position: absolute;
+    top: 170px;
+    left: 200px;
+    width: 433px;
+    display: none;
+}
+.user-view p{
+    width: 50%;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    float: left;
+}
+.hint-title{
+    font-size: 48px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 0px #212121;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1),0 1px 3px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2),0 5px 10px rgba(0,0,0,0.25);
+    text-shadow: 0px 2px 3px #555;
+    text-shadow: 0 -1px 0 #374683;
+}
+.hint-description{
+    font-size: 36px;
+    font-weight: 100;
+    color: #eee;
+    text-shadow: -1px -1px #fff, 1px 1px #333;
+}
+.footer{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+}
+.btn-control{
+    display: block;
+    width: 311px;
+    height: 64px;
+    margin: 0 auto;
+}
+.btn-start{
+    background: url("../images/icon-start.png") center top no-repeat;
+}
+.btn-end{
+    background: url("../images/icon-end.png")  center top no-repeat;
+}
+.prize{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.prize-title{
+    padding-left: 30px;
+    font-size: 34px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 400;
+    padding-right: 10px;
+}
+.prize-photo{
+    text-align: right;
+}
+.rows{
+    background: url("../images/comment-list-bg.png");
+    margin-bottom: 20px;
+}
+.rows-choujiang{background: none !important;}
+.left{
+    width: 150px;
+    margin-right: -150px;
+    float: left;
+}
+.right{
+    width: 100%;
+}
+.right-view{
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin-left: 160px;
+    color: #fff;
+}
+.comment-title{
+    padding-top: 40px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.left-photo{
+    text-align: center;
+    padding-top:20px ;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.left-photo img{
+    border-radius: 50%;
+    width: 100%;
+    height: 80px;
+}
+.left-text{
+    width: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    white-space:nowrap;/* 不换行 */
+    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+    /*text-overflow:ellipsis;*/
+}
+.clear{
+    clear: both;
+}
+.p1{
+    font-size: 48px;
+    line-height: 140px;
+    font-weight: bold;
+}
+.p2{
+    font-size: 27px;
+    line-height: 50px;
+    text-indent: 2em;
+    text-align: left;
+}
+/*  new  */
+.comment-content{
+    position: fixed;
+    top: 6%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+}
+.comment-logo{
+    padding-left: 50px;
+}
+.comment-view{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top:180px ;
+    box-shadow: 0 0 15px #fff;
+    background: url("../images/comment-bg.png");
+    padding: 20px;
+}
+.comment-view-scroll{
+    width: 100%;height: 100%;
+    overflow: hidden;
+
+    -webkit-transform: translate3d(0px, 0%, 0px);
+    transform: translate3d(0px, 0%, 0px);
+    -moz-transform: translate3d(0px, 0%, 0px);
+    -ms-transform: translate3d(0px, 0%, 0px);
+
+
+}
+.comment-view-scroll-child{
+    width: 100%;
+}
+.people{
+    display: none;
+}
+.rows{
+    color: #fff;
+    text-align: center;
+}
+.rows span{    background: url("../images/comment-list-bg.png");padding: 2% 4%;}
+.people-one{
+    height: 100%;
+}

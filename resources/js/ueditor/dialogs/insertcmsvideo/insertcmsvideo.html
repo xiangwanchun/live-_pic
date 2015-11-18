@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script type="text/javascript" src="../internal.js"></script>
+    <script src="../../jquery1.8.2.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../tabs/jquery.tabso_yeso.js"></script>
+    <link href="../../tabs/shou.css" rel="stylesheet" type="text/css" />
+    <script src="../../dialog.2.3.js" type="text/javascript"></script>
+    <style type="text/css">
+        .font{font:12px '微软雅黑'}
+        .clear{clear:both; float:none;}
+        .dis-none{display: none;}
+        .mp-0{margin:0px;padding:0px;}
+        .my-tab{position:relative;overflow-x: hidden;width: 504px;}
+        .my-tab ul{background-color:#F0F0F0;width: 504px;height: 32px;}
+        .my-tab ul li{background:url('../../themes/default/images/b1_23.png') no-repeat; width:115px;height: 32px; float: left;line-height: 32px;text-align: center;cursor: pointer;}
+        .tab-con{height: auto;overflow: hidden;position: relative;}
+        .tab-con .tab-con-cil{height: auto;}
+
+        .searchbox{width: 98%; height:30px; line-height:30px; margin-top: 5px;
+            text-align: center;}
+        .searchbox .txt{width:220px; height:20px; line-height:20px; background: #FFF;border:1px solid #d7d7d7;}
+        .searchbox a{display:inline-block;}
+        .txt{width:220px; height:20px; line-height:20px; background: #FFF;border:1px solid #d7d7d7;}
+        #container{width: 98%; height: 310px;margin: 5px auto; border: 1px solid gray;}
+        .pages{margin-right:20px;margin-top:20px;float:right;}
+        .pages a{display:inline-block;}
+        .fl{float: left; padding-top: 3px;padding-right: 5px;}
+        .mt{margin-top: 5px; vertical-align:middle; }
+        .mt span{font-size: 20px;line-height: 30px; font-weight: bold; cursor: pointer;}
+    </style>
+</head>
+<body>
+
+<div class='my-tab mp-0' id="myTab">
+    <ul class='mp-0 font'>
+        <li>引用视频</li>
+        <li class="dis-none">选择已有视频</li>
+    </ul>
+    <div class="clear"></div>
+    <div class='tab-con font' style="width: 504">
+        <div class='tab-con-cil'>
+            <table style="margin: 20px 0px 10px 100px;">
+                <tbody>
+                <tr>
+<!--                    <td id="link_description" colspan="2" style="padding-top: 10px;">视频链接</td>-->
+                </tr>
+                <tr>
+                    <td><label for="text"> 描述内容：</label></td>
+                    <td><input type="text" id="text" class="txt"></td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;"><label for="href"> 链接地址：</label></td>
+                    <td style="padding-top: 10px;"><input type="text" id="href" class="txt"></td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;"><label for="href"> 加载显示图：</label></td>
+                    <td style="padding-top: 10px;"><input type="text" id="pic" class="txt"></td>
+                </tr>
+                </tbody></table>
+        </div>
+        <div class='tab-con-cil dis-none'>
+            <div class="content">
+                <div class="searchbox">
+                    <div class="fl" style="padding-left: 50px;">
+                        <input type="text" id="title_search" class="txt" name="title_search" value=""  title="请输入栏目名称" />
+                    </div>
+                    <div class="fl">
+                        <a id="doSearch" href="javascript:void(0)" class="button">搜 索</a>
+                    </div>
+                </div>
+                <div id="container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var g = $G;
+
+    $(document).ready(function(){
+
+        $('.my-tab').find('ul:first').find('li:first').css('background', 'url("../../themes/default/images/b2_22.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)');
+        $('.my-tab').find('ul:first').find('li').click(function(){
+            $(this).css('background', 'url("../../themes/default/images/b2_22.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)').siblings().removeAttr('style');
+            $('.my-tab').find('.tab-con-cil:eq('+$(this).index()+')').show().siblings().hide();
+        });
+
+        initSearchText($('#title_search'));
+        $('#title_search').keydown(function(event){
+            if(event.keyCode == 13){
+                doSearch();
+            }
+        });
+    });
+
+    function initSearchText(obj){
+        var title = obj.attr('title') ? obj.attr('title') : "请填写要搜索的标题";
+        var value = $.trim(obj.val());
+        if(value == ''){
+            obj.val(title);
+        }
+
+        obj.blur(function(){
+            if ($.trim(obj.val())=="")
+                obj.val(title);
+        }).focus(function(){
+                    if ($.trim(obj.val())==title)
+                        obj.val("");
+                })
+    }
+
+    function ajaxGetContent(cntPage){
+        var requestUrl = editor.options.getHiCmsUrl+"?type=video&status=6&cntPage="+cntPage;
+        if (arguments.length>1) {
+            requestUrl += "&name="+arguments[1];
+            if(arguments.length > 2)
+                requestUrl += "&catalog="+arguments[2];
+        }
+        ajax.request(requestUrl, {
+            timeout:100000,
+            action:"get",
+            onsuccess:function (xhr) {
+                //去除空格
+                var jsonData = xhr.responseText;
+                jsonData = eval('('+jsonData+')');
+                var prefixLink = jsonData.link;
+                var html = "";
+                for (var i=0; i< jsonData.list.length; i++) {
+                    html += '<div style="margin-left:10px;height:24px;line-height:24px;width:480px;white-space:nowrap;overflow:hidden; text-overflow:ellipsis;"><input type="radio" name="content[id]" value="' + prefixLink + jsonData.list[i].id + '"/><input type="hidden" id="content_image_' + jsonData.list[i].id + '" value="' + jsonData.list[i].image + '"/><span style="margin-left:10px;">' +jsonData.list[i].title + '</span></div>';
+                }
+                html += '<div class="pages" style="width: 485px;margin-top: 320px;margin-right: 0px;">';
+                html += '<span class="fl">（'+jsonData.pageInfo.cntPage+'/'+jsonData.pageInfo.totalPage+'）页</span>';
+                for (var i=jsonData.pages.length-1; i >= 0; i--) {
+                    html += '<a  style="float: right;margin-top: 7px;" onclick="ajaxGetContent(\''+jsonData.pages[i].cntPage+'\', \''+jsonData.pages[i].searchName+'\')" href="javascript:void(0)" class="button">'+jsonData.pages[i].name+'</a>';
+                }
+                html += '</div>';
+                g("container").innerHTML = html;
+            },
+            onerror:function () {
+                g("container").innerHTML = lang.imageLoadError;
+            }
+        });
+    }
+
+
+    function doSearch(){
+        var title = $('#title_search').val();
+        if( title == $('#title_search').attr('title'))
+            title = '';
+        ajaxGetContent(1, title);
+    }
+    utils.domReady(function(){
+        ajaxGetContent(1);
+    });
+    var static_url = parent.window.$('#static_url').val();
+    g("doSearch").onclick = doSearch;
+    dialog.onok = function(){
+        var list=document.getElementsByName("content[id]");
+        var content = "";
+        for(var i=0;i<list.length;i++) {
+            if(list.item(i).checked){
+                var radio = list.item(i);
+                var link = radio.getAttribute("value");
+                var arrLink = link.split(":");
+                var image = document.getElementById("content_image_"+arrLink[2]);
+                var title = radio.parentNode.lastChild.innerHTML;
+                if (image.getAttribute("value")!="" && image.getAttribute("value")!='null') {
+                    content='<a href="'+link+'" title="'+title+'"><img src="'+image.getAttribute("value")+'" alt="'+title+'"/></a>';
+                } else {
+                    content='<a href="'+link+'" title="'+title+'">'+title+'</a>';
+                }
+                break;
+            }
+        }
+        // 插入内容到编辑器
+        editor.execCommand('inserthtml', content);
+
+        //添加自定义链接
+        var text = $('#text').val();
+        var href = $('#href').val();
+        var pic = $('#pic').val();
+        
+        if( href != ''){
+          //  var img_path = static_url + '/js/ueditor/themes/default/images/l_video.png';
+          //  var htm = '<a style="background:url('+img_path+') no-repeat;padding-left:25px;" href="'+href+'" target="" title="'+text+'" data_ue_src="'+href+'">'+text+'</a>';
+           var htm ='<video src="'+href+'" poster="'+pic+'" controls="controls" style="margin:20px auto; width:300px; display:block">'+
+                        '您的浏览器不支持 video 标签'+
+                    '</video>';   
+            editor.execCommand('inserthtml', htm);
+        }
+    }
+</script>
+</body>
+</html>

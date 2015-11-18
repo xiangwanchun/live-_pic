@@ -1,0 +1,377 @@
+html,body{
+    overflow: auto;
+}
+#main{
+    padding: 20px 40px;
+}
+.rows{
+    width: 100%;
+}
+.rows-time{
+    padding-bottom: 20px;
+}
+.rows-edit{
+    padding: 20px 0 10px 0;
+}
+.rows-left {
+    width: 100%;
+    float: left;
+}
+.buy{
+    margin-right:300px;
+}
+.buy-title{
+    font-size: 14px;
+    color: #666;
+    line-height: 40px;
+
+}
+.buy-main{
+    border: 1px solid #75ccef;
+    border-radius:7px;
+}
+.buy-right{
+    float: right;
+    margin-left: -254px;
+    width: 250px;
+    height: 250px;
+    border: 2px solid #75ccef;
+    border-radius:7px;
+}
+.buy-table td{
+    border-right:1px solid #ccc ;
+    border-bottom:1px solid #ccc ;
+    padding: 3px;
+    height: 30px;
+}
+.td-first{
+    width: 100px;
+    height: 36px !important;
+    padding: 0 !important;
+
+}
+.buy-main-point{
+    height: 22px;
+    margin: 1px auto;
+
+}
+.buy-main-point.current{
+    background: #d9d9d9;
+    border: 3px solid #d9d9d9;
+}
+.buy-main-point.current:hover{
+    border: 3px solid #75ccef;
+}
+.tv-logo{
+    width: 100%;
+    line-height: 30px;
+    text-align: center;
+    padding-top: 6px;
+}
+.tv-logo.current{
+    background:#75ccef ;
+}
+/***********
+*
+*   日历调整后的CSS
+*
+*************/
+
+.fc th, .fc td{
+    border: none !important;
+}
+.fc-basic-view{
+    width: 240px !important;
+}
+.fc-widget-header{
+    height: 30px !important;
+}
+.fc-widget-content{
+    height: 30px !important;
+}
+.fc-widget-content{
+
+}
+.fc-more-cell{
+    display: none;
+}
+.fc-day-number{
+    margin: 1px;
+}
+.fc-content{
+    display: none !important;
+}
+.fc-content-skeleton{
+    height: 40px !important;
+}
+.fc-content-skeleton tr{
+    height: 30px !important;
+}
+.fc-basic-view td.fc-day-number{
+    padding: 0 !important;
+}
+.fc-ltr .fc-basic-view .fc-day-number{
+    text-align: center;
+    line-height: 30px;
+    margin: 5px;
+}
+.fc-content-skeleton tbody{
+    display: none;
+}
+.fc-bg{
+    display: none;
+}
+.fc-row.fc-week.fc-widget-content.fc-rigid{
+    height: 30px;
+}
+.fc-basic-view tbody .fc-row{
+    min-height: 30px !important;
+}
+.fc-toolbar{
+    width: 240px;
+    height: 50px;
+    float: left;
+}
+.fc-view-container {
+    width: 240px;
+    height: 200px;
+    float: left;
+}
+.fc-today-button{
+    display: none;
+}
+/* year  */
+.fc-toolbar .fc-left{
+    display: block;
+    width: 100%;
+    height: 27px;
+    background: url("../images/calendar-title-bg.png") center top;
+    text-align: center;
+    line-height: 27px;
+    color: #fff;
+}
+.fc-toolbar .fc-right{
+    display: block;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+}
+.fc-button-group{
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.fc-toolbar .fc-left div{
+    position: relative;
+    width: 100%;
+    height: 40px;
+}
+.fc-toolbar .fc-left h2{
+    display: block;
+    width: 100%;
+    height: 27px;
+    background: url("../images/calendar-title-bg.png") center top;
+    text-align: center;
+    line-height: 27px;
+    color: #666;
+    font-size: 18px;
+    font-weight: normal;
+}
+/***  month ***/
+.fc-toolbar .fc-left p{
+    top: 27px;
+    left: 0;
+    right: 0;
+    color: #1fb9e5;
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    background: #f1f1f1;
+}
+.fc-prev-button,.fc-next-button{
+    width: 30px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+.fc-prev-button{
+    background: url("../images/calendar-control-prev.png") center center no-repeat !important;
+}
+.fc-prev-button *,.fc-next-button *{
+    display: none !important;
+}
+.fc-next-button{
+    float: right !important;
+    background: url("../images/calendar-control-next.png") center center no-repeat !important;
+}
+.fc-day-grid-container.fc-scroller{
+    height: 180px !important;
+    overflow: hidden !important;
+}
+.fc-ltr .fc-basic-view .fc-day-number{
+    text-align: center !important;
+}
+.row-edit-left{
+    display: table-cell;
+    align-content: center;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border: 1px solid #75ccef;
+    vertical-align: middle;
+}
+.row-edit-left img{
+    vertical-align: middle;
+}
+.row-edit-right{
+    position: absolute;
+    top: 0;
+    padding-top: 20px;
+    left: 120px;
+    right: 0;
+}
+.rer-title{
+    font-size: 14px;
+    color: #666;
+}
+.rer-time{
+    width: 100%;
+    height: 25px;
+    padding-top: 23px;
+    position: relative;
+}
+.rert-title,.rera-title{
+    display: block;
+    width: 50px;
+    height: 25px;
+    float: left;
+    line-height: 25px;
+    color: #666;
+    font-size: 12px;
+}
+.rera-title{
+    width: 70px;
+}
+.rert-line{
+    height: 25px;
+    background: #e5e5e5;
+    position: absolute;
+    left: 70px;
+    right: 52px;
+}
+.time-width{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    background: #a1d6eb;
+}
+.time-val{
+    position: absolute;
+    top: -15px;
+    font-size: 10px;
+    left: -20px;
+    color: #666;
+}
+.rer-activity{
+    padding-top: 15px;
+    height: 30px;
+}
+.rer-activity *{
+    float: left;
+}
+.input-time{
+    display: block;
+    width: 110px;
+    height: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 3px;
+    margin: 0 6px;
+}
+
+.activity-name{
+    display: block;
+    width: 190px;
+    height: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 3px;
+    margin: 0 6px;
+}
+.width_80{
+    display: block;
+    width: 80px;
+    height: 24px;
+    margin-left: 20px;
+    background: #099acf;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+}
+.r-setting-header{
+    width: 100%;
+    position: relative;
+}
+.r-setting-header p{
+    font-size: 14px;
+    color: #666;
+    line-height: 30px;
+}
+.uploading-btn{
+    position: absolute;
+    top: 0;
+    right: 0px;
+}
+.r-setting-main{
+    border: 2px solid #75ccef;
+    border-radius: 7px;
+}
+.setting-table{
+   text-align: center;
+}
+.setting-table td{
+    vertical-align: middle;
+}
+.setting-table thead tr{
+
+
+}
+.setting-table thead tr th{
+    height: 30px;
+    border-bottom: 1px solid #ccc;
+}
+.setting-table td input{
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.setting-table td span{
+}
+.line-bar-red{
+    position: absolute;
+    left: 400px;
+    width: 1px;
+    top: -5px;
+    height: 35px;
+    background: #ff0000;
+}
+.line-bar-red .time-val{
+    left: -20px;
+}
+.icon-zoom{position: absolute;}
+.icon-zoom-in{position: absolute;right:26px;width: 24px;height: 24px;background: url("../images/icon-zoom-in.jpg");}
+.icon-zoom-out{position: absolute;right:0px;width: 24px;height: 24px;background: url("../images/icon-zoom-out.jpg");}
+.time-alert-detail{position: absolute;top:25px;width: 200px;left: -100px;padding-top: 10px;display: none;z-index: 2;}
+.time-alert-detail-header{position: absolute;top: 4px;width: 100%;height:7px;background: url("../images/icon-alert-header.png") center top no-repeat; }
+.time-alert-detail-content{background: #fff;border: 1px solid #75ccef;padding: 2%;border-radius: 3px;}
+.program-interactive-list.current td{border-top: 1px solid #ffa5a5;border-bottom: 1px solid #ffa5a5;}
+
