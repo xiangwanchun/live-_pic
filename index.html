@@ -16,7 +16,7 @@
   <script type="text/javascript" src="resources/js/jquery.easyui.min.js"></script> 
   <script type="text/javascript" src="resources/js/easyui-lang-zh_CN.js"></script> 
   <script type="text/javascript" src="resources/js/common.js"></script> 
-  <script type="text/javascript" src="resources/js/dialog/dialog-min.js"></script> 
+  <script type="text/javascript" src="resources/js/dialog/dialog-plus-min.js"></script> 
   <link rel="stylesheet" type="text/css" href="resources/js/uploadify/uploadify.css" /> 
   <script type="text/javascript" src="resources/js/uploadify/jquery.uploadify.js"></script> 
   <script type="text/javascript">
@@ -157,7 +157,11 @@
             .leftCon{margin-right:180px;}
             .rightCon{position:absolute;top:28px;right:0;border:1px solid #099acf;width:200px;height:100%;min-height:800px;overflow-y:auto;overflow-x:hidden;}
             #main{position:relative;}
-            .addGround{width:180px;height:30px;line-height:30px;display:inline-block;margin:10px auto 0 10px;border-radius:4px;border:1px solid #099acf;text-align:center;color:#099acf;}
+            .addGround{width:180px;height:30px;line-height:30px;display:inline-block;margin:10px 0 10px 10px;border-radius:4px;border:1px solid #099acf;text-align:center;color:#099acf;}
+            .addGround:focus{color:#099acf;}
+            .addGround:hover{color:#0072C6;border-color:#0072C6;}
+            .imgGround{height:30px;line-height:30px;width:100%;border-bottom:1px solid #099acf;;display:inline-block;text-align:center;cursor:pointer;}
+            .imgGround.cur{background:#099acf;color:#ffffff;}
     </style> 
  </head> 
  <body> 
@@ -176,12 +180,12 @@
             <div class="h30  fl mgr10">
                 <input type="checkbox" class="checkbox-all mg0-5" /><label for="">全选</label>
             </div>
-            <a class="btn w100px h30 btn-style fl mgr10" onclick="bindAct();">移动删除</a> 
-            <a class="btn w100px h30 btn-style fl" onclick="delet_vedio();">批量删除</a> 
+            <a class="btn w100px h30 btn-style fl mgr10" onclick="imgMoveGroups();">移动分组</a> 
+            <a class="btn w100px h30 btn-style fl" onclick="imgDel();">批量删除</a> 
             
             <div class="relative buf2" style="display:inline">
             <span class="mgl20">搜索</span> 
-             <input type="text" name="search" id="search" value="" class="input-search input h25 w210px" style="text-align:left;" /> 
+             <input type="text" name="search" id="search" placeholder="素材名称" class="input-search input h25 w210px" style="text-align:left;" /> 
              <label class="submit-search"></label> 
             </div> 
            </div> 
@@ -193,9 +197,9 @@
                     <img src="resources/images/default.png" alt="" />
                     <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
                     <div class="clearfixrow">
-                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="bindAct();">重命名</a> 
-                        <a class="btn  h30 btn-style fl mgr10 pd0-8" onclick="delet_vedio();">转移分组</a>
-                        <a class="btn  h30 btn-style fl pd0-8" onclick="delet_vedio();">删除</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8 imgRename" cid="9">重命名</a> 
+                        <a class="btn  h30 btn-style fl mgr10 pd0-8 imgMoveGroups" cid="9">转移分组</a>
+                        <a class="btn  h30 btn-style fl pd0-8 imgDel" cid="9">删除</a> 
                     </div>
                 </li>
                  <li>
@@ -325,8 +329,13 @@
             </div> 
         </div><!-- 左边部分 -->
         <div class="rightCon">
-            <a class="h30 btn-style  wr100" style="display:block">未分组</a>
+            <a class="h30 btn-style  wr100" style="display:block">分组名称</a>
             <a href="javascript:void(0);" class="addGround">+新建分组</a>
+            <ul>
+                <li><span class="imgGround cur">分组1</span></li>
+                <li><span class="imgGround">分组1</span></li>
+                <li><span class="imgGround">分组1</span></li>
+            </ul>
         </div><!-- 右边添加分组 -->
    </div> 
   <!-- 加载中 --> 
@@ -427,20 +436,6 @@
     </script>   
   <script type="text/javascript">
 
-    $('#startTime,#endTime').datebox({
-        showSeconds: false,
-        width:'125',
-        // editable:false,  //设置时间框不能手动输入
-    });
-    $('.datebox').css({'height':'25px','border-radius':'7px','border':'solid 1px #ccc'});
-    $('.combo-arrow').parent().css('margin-left','-4px');
-
-/*    //清空date值
-    $(".clean").click(function(){
-        $('#startTime').datebox('setValue', '');   // 设置datebox 值
-        $('#endTime').datebox('setValue', ''); // 设置datebox 值
-    });
-*/
     var $player_win;
     $player_win = $('#play-window').window({
         //modal:true,
@@ -462,137 +457,45 @@
         $('#play-window').html("");
         $player_win.window('close');
     }
+    $('.imgRename').click(function(){
+        var checkbox = $(this).parent('div').prev('p').find('input');
+        if(!checkbox.is(":checked")){
+            checkbox.attr('checked', 'true');
+        }
+        rename_name('12222211');
+    })
 
-    $(".bind_tmp").click(function(){
-        var photoId = $(this).attr('id');
-        bindAct(photoId);
-    });
-    var bindAct = function(photoId){
-        var id = new Array();
-        if(photoId){
-            id.push(photoId);
-        }else{
-            $('.checkbox-one:checked').each(function(){
-                id.push($(this).val());
-            });
-        }
-        if(id.length < 1){
-            $.messager.alert('提示','请选择要操作的对象!');
-            return false;
-        }
-        var height =470 ;
-        var top = ($(window).height() - height) * 0.5; //居中值
-        if(top <=5 ) {
-            var top = 5;
-        }
-        top += $(document).scrollTop();//$(window).height()只会拿到当前的可视宽度，而Dialog是绝对定位的，所以只会在最上面。当再加上滚动条所滚动的高度就OK。
-        $("body").append('<div class="kaitongfuwu fuwushow dis" style="width:500px; height:395px;z-index: 2001;top:5px;"></div>');
-        $('.fuwushow').dialog({
-            title:'添加内容',
-            width: 900,   
-            height: 490,   
-            closed: false,  
-            closable:true, 
-            top:top,
-            border:false,
-            modal: true, //显示遮罩
-            onClose:function(){  //当关闭的时候，清空搜索框内容，下次搜索时，那么每次都是搜索出全部内容
-                $("#name_search_1").val('');
-                a_search();
-            },
-            buttons: [{
-                text:'确定',
-                iconCls:'icon-ok',   
-                handler:function(){
-                    var cat = $(".cat_list:checked");
-                    if(cat.length>0){
-                        var actid = cat.eq(0).val();
-                        var name = $("#content_title_"+id).text(); //被选中的活动名字
-                        //开始绑定活动
-                        var data = {};
-                        data['act_id'] = actid;
-                        data['photo_id'] = id;
-                        var bindUrl = '/photo/bindAct';
-                        $.post(bindUrl,data,function(data){
-                            if(data.code == 1){
-                                setTimeout(window.location.reload(),2000) //解绑成功后刷新当前页
-                            }else{
-                                $.messager.alert('提示',data.message);
-                            }
-                        },'json')
-                    }else{
-                         $.messager.alert('提示','请选择活动！');
+    function rename_name(imgName){
+        var d = dialog({
+                    id:'999',
+                    title : '素材重命名',
+                    content : '<input type="text" id="imgRenameVal" value="'+imgName+'" autofocus/>',
+                    okValue : '确定',
+                    ok: function () {
+                        console.log($('#imgRenameVal').val());
+                        var that = this;
+                        var load = dialog({
+                          content:'<p><span class="ui-dialog-loading">Loading..</span><span style="height:30px;line-height:30px">正在提交...<span><p>'
+                        })
+                        load.showModal();
+                    },
+                    cancelValue : '取消',
+                    cancel: function () {
+
                     }
-                }
-            },{
-                text:'取消',
-                iconCls:'icon-no',
-                handler:function(){
-                    $('.fuwushow').window('close');
-                    $('.fuwushow').window('destroy');    //消毁
-                }
-            }],
-            cache: false,   
-            href:"/content/asyncGetList?selectMode=radio&q=1",
-            onOpen:function(){
-                $(".fuwushow").show();
-                // a_search();
-            },
-            onClose:function(){
-                $('.fuwushow').window('destroy');    //消毁
-            }
+                });
 
-        });
+            d.showModal();
     }
-    // 解绑
-    $(".bind_tmp_remove").click(function(){
-
-        var photoId = $(this).attr('id');
-       // var id = $(this).attr('act_id');
-        removeBindAct(photoId);
-    });
-
-
-    var removeBindAct = function(pid){
-        var id = new Array();
-        if(pid){
-            id.push(pid);
-        }else{
-            $('.checkbox-one:checked').each(function(){
-                id.push($(this).val());
-            });
-        }
-        if(id.length < 1){
-            $.messager.alert('提示','请选择要操作的对象!');
-            return false;
-        }
-        $.messager.confirm('提示', '您确认要解除服务绑定吗？', function(result){
-            if(result){
-                $('#win').window('open');
-                if(id){
-                    $.ajax({url: "/photo/removeActBind",type:'POST' ,data:{photo_id:id},dataType:'json', success: function(data){
-                        console.log(data);
-                        if(data.code==1){
-                            $.messager.alert('提示',data.message);
-                            setTimeout(window.location.reload(),2000) //解绑成功后刷新当前页
-                        }
-                    }});
-                }else{
-                    $('#win').window('close');
-                }
-            }
-        });
-    }
-
     /*
-     **删除视频
+     **删除图片
      */
-    $(".delete_tmp").click(function(){
-        var id = $(this).attr('id');
-        delet_vedio(id);
+    $(".imgDel").click(function(){
+        var id = $(this).attr('cid');
+        delet_img(id);
     });
 
-    function delet_vedio(aid){
+    function delet_img(aid){
 
         var id = new Array();
         if(aid){
@@ -631,58 +534,27 @@
     }
 
 
+
+
+
     $(".submit-search").click(function(){
-        video_search_index();
+        member_search();
     });
 
+     $(".input-search").keydown(function(e){
+        if(e.keyCode==13){
+            member_search();
+        }
+    })
+
+
     //搜索
-    function video_search_index() {
-        // var num = $(".select option:selected").val();//每页显示数目
-        var start_time = $('#startTime').datebox('getValue');
-        var end_time = $('#endTime').datebox('getValue');
-        var status = $('#chooseStatus').val();
-        var name = $('#search').val();  //搜索关键词
-        if (name == "请输入标题") {
-            name = '';
+    function member_search(){
+        var name = $.trim($('#search').val());
+        if( name == $('#search').attr('placeholder')){
+            name = '';     
         }
-
-        // console.info(vmsResType);
-        // console.info(status);
-        // console.info(catalogPath);
-        // console.info(catalogName);
-        // console.info(start_time);
-        // console.info(end_time);
-        // console.info(name);
-        // return false;
-
-        var date = $(".chk_date").html(); //月份
-
-        if(start_time > end_time){
-            $.messager.alert('消息','开始时间不能大于结束时间！');
-            return false;
-        }
-
-        if(start_time){
-            if(!end_time){
-                $.messager.alert('消息','请选择结束时间！');
-                return false;
-            }
-        }
-        if(end_time){
-            if(!start_time){
-                $.messager.alert('消息','请选择开始时间！');
-                return false;
-            }
-        }
-        if(!date){
-            var url = "/photo/list?name="+name+"&start_time="+start_time+"&end_time="+end_time+"&status="+status;
-        }else{
-            var url = "/photo/list?name="+name+"&date="+date;
-        }
-        $("#win").window("open");
-        window.location.href = url;
-
-        // $("#win").window("close");  载入后就刷新了，所以不需要关闭
+        window.location.href = "/account/list?_=1447831357&name="+encodeURIComponent(name);
         return false;
     }
 
