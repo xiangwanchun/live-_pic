@@ -151,8 +151,8 @@
             .imgCon li{padding:10px;border:1px solid #099acf;border-radius:5px;width:195px;margin:0 0 10px 10px ;overflow:hidden;float:left;}
             .imgCon li img{width:195px;height:195px;display:inline-block;}
             .imgCon li .imgTitileWrap{height:36px;line-height:36px;}
-             .imgCon li .imgTitileWrap .imgTitile{height:36px;line-height:36px;width:170px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:5px;}
-             .imgCon li .imgTitileWrap input{float:left;height:36px;line-height:36px;}
+            .imgCon li .imgTitileWrap .imgTitile{height:36px;line-height:36px;width:170px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:5px;}
+            .imgCon li .imgTitileWrap input{float:left;height:36px;line-height:36px;}
             .pd0-8{padding:0 8px;}
             .leftCon{margin-right:180px;}
             .rightCon{position:absolute;top:28px;right:0;border:1px solid #099acf;width:200px;height:100%;min-height:800px;overflow-y:auto;overflow-x:hidden;}
@@ -160,16 +160,33 @@
             .addGround{width:180px;height:30px;line-height:30px;display:inline-block;margin:10px 0 10px 10px;border-radius:4px;border:1px solid #099acf;text-align:center;color:#099acf;}
             .addGround:focus{color:#099acf;}
             .addGround:hover{color:#0072C6;border-color:#0072C6;}
-            .imgGround{height:30px;line-height:30px;width:100%;border-bottom:1px solid #099acf;;display:inline-block;text-align:center;cursor:pointer;}
+            .imgGround{height:30px;line-height:30px;width:100%;border-bottom:1px solid #099acf;;display:inline-block;text-align:center;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
             .imgGround.cur{background:#099acf;color:#ffffff;}
+            #topTitle .h4{color:#666;font-size:16px;}
+            #topTitle a{cursor:pointer;color:#099acf;}
+            #topTitle a:hover{text-decoration:underline;}
+            #d_removeGround{max-height:200px;width:200px;overflow-y:auto;}
+            #d_removeGround li{text-align:left;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;height:30px;line-height:30px;}
+            #d_removeGround li input{margin-right:10px;vertical-align:middle;}
+            #addGroundUl li{height:30px;line-height:30px;}
+            #imgView{position:relative;}
+            #imgView .closeImgView{position:absolute;width:30px;height:30px;border-radius:50%;border:2px solid #fff;background-color:#999;top:-15px;right:-15px;font-size:30px;text-align:center;line-height:30px;color:#fff;}
+            #imgView .closeImgView:hover{background-color:#666;}
+            .imgUpload_btn{position:absolute;left:50%;bottom:20px;margin-left:-50px;background-color:#099acf;border-radius:4px;font-family:'微软雅黑';}
+            .imgUpload_btn:active,.imgUpload_btn:focus{color:#fff;}
+            .imgUpload_btn:hover{background-color:#3385ff;}
     </style> 
  </head> 
  <body> 
   <div id="main" class="ad"> 
         <div class="leftCon">
           <!-- 顶部批量操作区 -->
-           <div class="wr100 relative h40 bdb2px"> 
-            <h4 class="h4 h40 ad-title">图片管理</h4> 
+           <div class="wr100 relative h40 bdb2px">
+             <div class="clearfixrow" id="topTitle">
+                <h4 class="h4 h40 fl  mgr10" gid="1">图片管理</h4>
+                <a class=" pd0-8 h40  fl groupRename" title="重命名">重命名</a> 
+                <a class=" pd0-8 h40  fl groupDel"  title="删除分组">删除分组</a> 
+            </div>
             <div class="btn  h30  buf2 " id="upload_wrap"> 
              <!-- 上传节目 --> 
                  <a class="describe">大小不超过5M</a>
@@ -194,7 +211,7 @@
          
             <ul class="imgCon clearfixrow" id="imgCon">
                 <li>
-                    <img src="resources/images/default.png" alt="" />
+                    <img src="resources/images/default.png" sourceUrl  alt="" />
                     <p class="imgTitileWrap clearfixrow"> <input type="checkbox" class="checkbox-one" value="8" /> <span class="imgTitile"> 这里是照片的名字这里是照片的名字这里是照片的名字这里是照片的名字</span></p>
                     <div class="clearfixrow">
                         <a class="btn  h30 btn-style fl mgr10 pd0-8 imgRename" cid="9">重命名</a> 
@@ -360,9 +377,9 @@
             <a class="h30 btn-style  wr100" style="display:block">分组名称</a>
             <a href="javascript:void(0);" class="addGround">+新建分组</a>
             <ul id="addGroundUl">
-                <li><span class="imgGround cur">分组1</span></li>
-                <li><span class="imgGround">分组1</span></li>
-                <li><span class="imgGround">分组1</span></li>
+                <li><span class="imgGround cur" id="ground_0" gid="0">未分组</span></li>
+                <li><span class="imgGround" id="ground_1" gid="1">分组1</span></li>
+                <li><span class="imgGround" id="ground_2" gid="2">分组2</span></li>
             </ul>
         </div><!-- 右边添加分组 -->
    </div> 
@@ -498,7 +515,7 @@
         var d = dialog({
                     id:'999',
                     title : '素材重命名',
-                    content : '<input type="text" id="imgRenameVal" style="height:28px;line-height:28px;padding:2px 10px" value="'+imgName+'" autofocus/>',
+                    content : '<input type="text" id="imgRenameVal" style="height:28px;line-height:28px;padding:2px 5px" value="'+imgName+'" autofocus/>',
                     okValue : '确定',
                     ok: function () {
                         //console.log($('#imgRenameVal').val()); 取表单值
@@ -524,14 +541,10 @@
                         })
                         .fail(function() {
                             load.title('提示信息').content('<p  class="dailog_p"> <i class="layui-layer-ico layui-layer-ico5"></i>改名失败</p>');
-                            prevP.find('.imgTitile').text($('#imgRenameVal').val());
                              setTimeout(function () {
                                load.close().remove();
                            }, 4000);
-                        })
-
-                      
-                        
+                        })                      
                     },
                     cancelValue : '取消',
                     cancel:function(){
@@ -629,6 +642,17 @@
 
     function imgMoveGroups(aid){
         var id = new Array();
+        var groupHtml = '<ul id="d_removeGround">'+
+                        '    <li><input type="radio" name="imggroup" gid="0"/>未分组未分组未分组未分组未分组未分组未分组未分组未分组未分组未分组未分组未分组</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="1" />分组1</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="2"/>分组2</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="3"/>未分组</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="4"/>分组1</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="5"/>分组2</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="6"/>未分组</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="7"/>分组1</li>'+
+                        '    <li><input type="radio" name="imggroup" gid="8"/>分组2</li>'+
+                        '</ul>';
         var load_imgDel = dialog({
                           title : '提示',
                           content:'<p  class="dailog_p"> <i class="layui-layer-ico"></i>请选择要操作的对象</p>'
@@ -646,7 +670,7 @@
             return false;
         }
 
-        load_imgDel.content('<p  class="dailog_p"> <i class="layui-layer-ico"></i>您确认要转移选中项吗？</p>').button([
+        load_imgDel.content(groupHtml).button([
                 {
                     value: '取消',
                     callback: function () {
@@ -722,20 +746,157 @@
                     }
                 }).showModal();;
     })
+     /*
+     **分组删除操作
+     */
+    $(".groupDel").click(function(){
+
+        var groupDataNode = $(this).siblings('.h4');
+        var gid = groupDataNode.attr('gid');
+        groupDel(gid);
+    });
+
+    function groupDel(aid){
+        var id = new Array();
+        var load_imgDel = dialog({
+                          title : '提示',
+                          content : '<p  class="dailog_p" style="height:auto"> <i class="layui-layer-ico"></i><span class="fl">仅删除分组，不删除图片,组内图<br>片将自动归入未分组</span></p>',
+                          button : [
+                                  {
+                                      value: '取消',
+                                      callback: function () {
+                                         
+                                      }
+                                  },
+                                  {
+                                      value: '确认',
+                                      callback: function () {
+                                       load_imgDel.content('<p style="margin-top:15px"><i class="ui-dialog-loading">Loading..</i><span style="height:30px;line-height:30px">正在提交...<span><p>').title().button();
+                                 
+                                          $.ajax({
+                                            url: '/path/to/file',
+                                            type: 'POST',
+                                            dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+                                            data: {photo_id:id},
+                                          })
+                                          .done(function() {
+                                            load_imgDel.content('<p  class="dailog_p"> <i class="layui-layer-ico layui-layer-ico6"></i>分组删除成功</p>').title('提示信息');
+                                            setTimeout(function () {
+                                                 window.location.reload();
+                                                 load.close().remove();
+                                             }, 2000);
+                                             setTimeout() //解绑成功后刷新当前页
+                                          })
+                                          .fail(function() {
+                                            load_imgDel.content('<p  class="dailog_p"> <i class="layui-layer-ico layui-layer-ico5"></i>分组删除失败</p>').title('提示信息');
+                                             setTimeout(function () {
+                                                 window.location.reload();
+                                                 load.close().remove();
+                                             }, 4000);
+                                          });
+                                          return false;
+                                      },
+                                  }
+                           ]
+                        }).showModal();;
+        
+        return false
+    }
+
+    /*
+     **分组改名操作
+     */
+
+    $('.groupRename').click(function(){
+        var groupDataNode = $(this).siblings('.h4');
+        groupRename(groupDataNode.text(),groupDataNode.attr('gid'));
+    })
+
+    function groupRename(groupName,gid){
+        var d_groupRename = dialog({
+                    id:'999',
+                    title : '分组重命名',
+                    content : '<input type="text" id="groupRenameVal" style="height:28px;line-height:28px;padding:2px 5px" value="'+groupName+'" autofocus/>',
+                    okValue : '确定',
+                    ok: function () {
+                        var groupRenameVal = $('#groupRenameVal').val();
+                        //console.log($('#imgRenameVal').val()); 取表单值
+                        var that = this;
+                        d_groupRename.content('<p style="margin-top:15px"><i class="ui-dialog-loading">Loading..</i><span style="height:30px;line-height:30px">正在提交...<span><p>').button().title();
+                        
+                        $.ajax({
+                          url: '/path/to/file',
+                          type: 'default GET (Other values: POST)',
+                          dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+                          data: {param1: 'value1'},
+                        })
+                        .done(function() {
+
+                             d_groupRename.title('提示信息').content('<p  class="dailog_p"> <i class="layui-layer-ico layui-layer-ico6"></i>分组改名成功</p>');
+                             $('#ground_'+gid).text(groupRenameVal);
+                               setTimeout(function () {
+                                 load.close().remove();
+                             }, 2000);
+  
+                        })
+                        .fail(function() {
+                            $('#ground_'+gid).text(groupRenameVal);
+                            d_groupRename.title('提示信息').content('<p  class="dailog_p"> <i class="layui-layer-ico layui-layer-ico5"></i>分组改名失败</p>');
+                             setTimeout(function () {
+                               load.close().remove();
+                           }, 4000);
+                        })
+ 
+                    },
+                    cancelValue : '取消',
+                    cancel:function(){
+
+                    }
+                }).showModal();;
 
 
+    }
 
+
+     /*
+     ** 图片单击预览
+     */
+
+     $('#imgCon img').click(function(){
+        var imgView = dialog({
+                          id : 668,
+                          content :'<div id="imgView"><img src="resources/images/default.png" style="min-height:500px;max-height:700px"/><a href="javascript:void(0)" class="closeImgView">×</a><a class="btn w100px h40 btn-style fl imgUpload_btn" href="#">下载图片</a></div>',
+                          padding:2
+                          }).showModal();
+     })
+
+     /*
+     ** 预览图关闭按钮
+     */
+     $('body').on('click','.closeImgView',function(){
+        dialog.get('668').close().remove();
+     })
+
+    /*
+     **分组单击操作
+     */
+
+    $('.imgGround').click(function(){
+        var gid =$(this).attr('gid'); 
+        $('#addGroundUl').find('.cur').removeClass('cur');
+        $(this).addClass('cur');
+        $('#topTitle .h4').html($(this).text()).attr('gid', gid);
+    })
 
     $(".submit-search").click(function(){
         member_search();
     });
 
-     $(".input-search").keydown(function(e){
+    $(".input-search").keydown(function(e){
         if(e.keyCode==13){
             member_search();
         }
     })
-
 
     //搜索
     function member_search(){
@@ -747,6 +908,10 @@
         return false;
     }
 
-</script>   
+</script>  
+
+
+
+
  </body>
 </html>
