@@ -1080,3 +1080,6 @@ img#img_content_big {
 /*margin-top: -90px;*/
 height: 100%;
 }
+
+.dailog_p{height:30px;line-height:30px}
+.dailog_p .layui-layer-ico{margin-right:10px}

@@ -99,3 +99,17 @@
 .icon-large-chart{
 	background:url('icons/large_chart.png') no-repeat center center;
 }
+
+.layui-layer-ico {
+    background: url(../img/icon.png) no-repeat;
+    float:left;
+    width:30px; height:30px;
+}
+
+/* .layui-layer-dialog .layui-layer-content .layui-layer-ico{position:absolute; top:16px; left:15px; _left:-40px; } */
+.layui-layer-ico1{background-position:-30px 0 }
+.layui-layer-ico2{background-position:-60px 0;}
+.layui-layer-ico3{background-position:-90px 0;}
+.layui-layer-ico4{background-position:-120px 0;}
+.layui-layer-ico5{background-position:-150px 0;}
+.layui-layer-ico6{background-position:-180px 0;}
