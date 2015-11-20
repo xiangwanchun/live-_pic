@@ -175,6 +175,9 @@
             .imgUpload_btn{position:absolute;left:50%;bottom:20px;margin-left:-50px;background-color:#099acf;border-radius:4px;font-family:'微软雅黑';}
             .imgUpload_btn:active,.imgUpload_btn:focus{color:#fff;}
             .imgUpload_btn:hover{background-color:#3385ff;}
+            #searchDef{text-align:center;}
+            .search_del{color:#099acf;cursor:pointer;}
+            .search_words{color:red;}
     </style> 
  </head> 
  <body> 
@@ -208,7 +211,7 @@
            </div> 
            <!-- 图片内容展示区 -->
            <div class="wr100 pd10-0"> 
-         
+            <p id="searchDef" class="h30">已显示<span class="search_words">“搜索关键字“</span>的搜索结果，可点击<span class="search_del">清除</span>退出搜索结果</p>
             <ul class="imgCon clearfixrow" id="imgCon">
                 <li>
                     <img src="resources/images/default.png" sourceUrl  alt="" />
@@ -882,10 +885,18 @@
      */
 
     $('.imgGround').click(function(){
-        var gid =$(this).attr('gid'); 
+        var gid =$(this).attr('gid');
+
         $('#addGroundUl').find('.cur').removeClass('cur');
         $(this).addClass('cur');
         $('#topTitle .h4').html($(this).text()).attr('gid', gid);
+
+        if(gid==0){
+          $('#topTitle a').hide();
+        }else{
+          $('#topTitle a').show();
+        }
+
     })
 
     $(".submit-search").click(function(){
